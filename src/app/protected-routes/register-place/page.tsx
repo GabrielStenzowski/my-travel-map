@@ -49,6 +49,7 @@ export default function CadastrarLugar() {
     lng: -49.2733,
   })
   const [sugestoes, setSugestoes] = useState<sugestionProps[]>([])
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string>('')
 
   const [categoria, setCategoria] = useState('')
   const [loading, setLoading] = useState(false)
@@ -114,16 +115,21 @@ export default function CadastrarLugar() {
       return null
     }
   }
+  function handleSearchLocationByPlaceId(placeId: string) {
+    setSelectedPlaceId(placeId)
+    searchLocationById(placeId)
+  }
 
   const handleCadastrar = async () => {
-    console.log({ nome, location, geoLocation, categoria })
+    console.log({ nome, selectedPlaceId, location, geoLocation, categoria })
   }
+
   const handleSearchLocation = async () => {
     setLoading(true)
     await searchSuggestionLocation(nome)
     setLoading(false)
   }
-  console.log(sugestoes)
+
   return (
     <Wrapper title="Cadastrar Novo Lugar">
       <div className="flex justify-center items-center">
@@ -148,6 +154,11 @@ export default function CadastrarLugar() {
                 <div
                   key={sugestao.placePrediction.placeId || index}
                   className="border rounded-lg p-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() =>
+                    handleSearchLocationByPlaceId(
+                      sugestao.placePrediction.placeId
+                    )
+                  }
                 >
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">
