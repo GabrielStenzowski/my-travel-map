@@ -16,7 +16,6 @@ export default function Map({ locationPlace, zoom, mapDimentions }: mapProps) {
   if (loadError) return <p>Erro ao carregar o mapa</p>
   if (!isLoaded) return <p>Carregando...</p>
 
-  console.log(locationPlace)
   return (
     <>
       <GoogleMap

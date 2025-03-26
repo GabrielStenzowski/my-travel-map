@@ -1,5 +1,3 @@
-// app/dashboard/cadastrar-lugar/page.tsx
-
 'use client'
 
 import axios from 'axios'
@@ -19,16 +17,39 @@ import {
 import { Wrapper } from 'daju-ui-components'
 import { Card, CardContent } from '@/components/ui/card'
 import Map from '@/components/map'
+// import debounce from 'lodash.debounce'
+type PlacePredictionProps = {
+  place: string
+  placeId: string
+  structuredFormat: {
+    mainText: {
+      text: string
+    }
+    secondaryText: {
+      text: string
+    }
+  }
+  text: {
+    text: string
+  }
+  types: string[] // Array de strings
+}
+
+type sugestionProps = {
+  placePrediction: PlacePredictionProps
+}
 
 export default function CadastrarLugar() {
   // const router = useRouter()
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const [nome, setNome] = useState('')
   const [location, setLocation] = useState('')
   const [geoLocation, setGeoLocation] = useState({
     lat: -25.4284,
     lng: -49.2733,
   })
-  const [suggestions, setSuggestions] = useState<string[]>([])
+  const [sugestoes, setSugestoes] = useState<sugestionProps[]>([])
+
   const [categoria, setCategoria] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -37,19 +58,47 @@ export default function CadastrarLugar() {
     height: '300px',
   }
 
-  async function searchLocation(namePlace: string) {
+  async function searchSuggestionLocation(namePlace: string) {
     try {
-      const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json`,
+      const response = await axios.post(
+        'https://places.googleapis.com/v1/places:autocomplete',
         {
-          params: {
-            address: namePlace,
-            key: apiKey,
+          input: namePlace,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': apiKey,
           },
         }
       )
 
+      if (response.data.suggestions.length === 0) {
+        console.error('Local não encontrado')
+        return
+      }
+      console.log('Resposta da API:', response.data)
+
+      setSugestoes(response.data.suggestions || [])
+      // const placeId = response.data.candidates[0].place_id
+      // await searchLocationById(placeId)
+    } catch (error) {
+      console.error('Erro na requisição:', error)
+      return null
+    }
+  }
+
+  async function searchLocationById(placeId: string) {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json`,
+        {
+          params: {
+            place_id: placeId, // Passando o Place ID
+            key: apiKey,
+          },
+        }
+      )
       if (response.data.results.length === 0) {
         console.error('Local não encontrado')
         return
@@ -65,16 +114,16 @@ export default function CadastrarLugar() {
       return null
     }
   }
-  console.log(geoLocation)
+
   const handleCadastrar = async () => {
     console.log({ nome, location, geoLocation, categoria })
   }
   const handleSearchLocation = async () => {
     setLoading(true)
-    await searchLocation(nome)
+    await searchSuggestionLocation(nome)
     setLoading(false)
   }
-
+  console.log(sugestoes)
   return (
     <Wrapper title="Cadastrar Novo Lugar">
       <div className="flex justify-center items-center">
@@ -90,10 +139,29 @@ export default function CadastrarLugar() {
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                 />
+
                 <Button onClick={handleSearchLocation} disabled={loading}>
                   {loading ? 'Buscando...' : 'Pesquisar'}
                 </Button>
               </div>
+              {sugestoes.map((sugestao, index) => (
+                <div
+                  key={sugestao.placePrediction.placeId || index}
+                  className="border rounded-lg p-2 cursor-pointer hover:bg-gray-100"
+                >
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-medium">
+                      {sugestao.placePrediction.structuredFormat.mainText.text}
+                    </span>
+                    <span className="truncate text-xs text-muted-foreground">
+                      {
+                        sugestao.placePrediction.structuredFormat.secondaryText
+                          .text
+                      }
+                    </span>
+                  </div>
+                </div>
+              ))}
             </div>
             <div className="mb-4">
               <Label>Localização</Label>
