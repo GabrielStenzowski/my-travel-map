@@ -13,11 +13,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-// import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { Wrapper } from 'daju-ui-components'
 import { Card, CardContent } from '@/components/ui/card'
 import Map from '@/components/map'
-// import debounce from 'lodash.debounce'
+
 type PlacePredictionProps = {
   place: string
   placeId: string
@@ -32,7 +32,7 @@ type PlacePredictionProps = {
   text: {
     text: string
   }
-  types: string[] // Array de strings
+  types: string[]
 }
 
 type sugestionProps = {
@@ -40,7 +40,7 @@ type sugestionProps = {
 }
 
 export default function CadastrarLugar() {
-  // const router = useRouter()
+  const router = useRouter()
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const [nome, setNome] = useState('')
   const [location, setLocation] = useState('')
@@ -75,14 +75,11 @@ export default function CadastrarLugar() {
       )
 
       if (response.data.suggestions.length === 0) {
-        console.error('Local não encontrado')
+        alert('Local não encontrado')
         return
       }
-      console.log('Resposta da API:', response.data)
 
       setSugestoes(response.data.suggestions || [])
-      // const placeId = response.data.candidates[0].place_id
-      // await searchLocationById(placeId)
     } catch (error) {
       console.error('Erro na requisição:', error)
       return null
@@ -95,13 +92,13 @@ export default function CadastrarLugar() {
         `https://maps.googleapis.com/maps/api/geocode/json`,
         {
           params: {
-            place_id: placeId, // Passando o Place ID
+            place_id: placeId,
             key: apiKey,
           },
         }
       )
       if (response.data.results.length === 0) {
-        console.error('Local não encontrado')
+        alert('Local não encontrado')
         return
       }
 
@@ -122,6 +119,7 @@ export default function CadastrarLugar() {
 
   const handleCadastrar = async () => {
     console.log({ nome, selectedPlaceId, location, geoLocation, categoria })
+    router.push('/protected-routes/home-page')
   }
 
   const handleSearchLocation = async () => {
@@ -202,6 +200,7 @@ export default function CadastrarLugar() {
                   <SelectItem value="montanha">Montanha</SelectItem>
                   <SelectItem value="cidade">Cidade</SelectItem>
                   <SelectItem value="Histórico">Histórico</SelectItem>
+                  <SelectItem value="Restaurante">Restaurante</SelectItem>
                 </SelectContent>
               </Select>
             </div>

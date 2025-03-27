@@ -17,6 +17,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
+import { useRouter } from 'next/navigation'
 
 export function NavUser({
   user,
@@ -36,6 +37,14 @@ export function NavUser({
     return initials.slice(0, 2) // Limitar a 2 caracteres
   }
   const userInitials = getInitials(user.name)
+
+  const router = useRouter()
+
+  const handleLogout = () => {
+    console.log('Usuário fez logout')
+    router.push('/login')
+  }
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -82,7 +91,7 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
               <LogOutIcon />
               Log out
             </DropdownMenuItem>
