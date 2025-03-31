@@ -8,6 +8,7 @@ import { DashboardCategoryVisitedPlaces } from '../dashboard-category-visited-pl
 import VisitedPlaces from '../visited-places/page'
 import { useState } from 'react'
 import ModalVisitedPlace from '../components/modalVistedPlace'
+import NonVisitedPlace from '../non-visited-places/page'
 interface Lugar {
   id: string
   nome: string
@@ -65,9 +66,7 @@ export default function HomePage() {
             <CardTitle>📌 Lugares Desejados</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-gray-500 dark:text-gray-400">
-              Aqui estão os lugares que deseja visitar.
-            </p>
+            <NonVisitedPlace />
           </CardContent>
         </Card>
       </div>
