@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import {
   Table,
   TableBody,
@@ -12,7 +11,7 @@ import {
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
 
-interface Lugar {
+interface LugarNonVisited {
   id: string
   nome: string
   localizacao: string
@@ -20,7 +19,7 @@ interface Lugar {
   desejaVisitar?: boolean
 }
 
-const lugares: Lugar[] = [
+const lugares: LugarNonVisited[] = [
   {
     id: '1',
     nome: 'Paris, França',
@@ -47,38 +46,36 @@ const lugares: Lugar[] = [
   },
 ]
 
-export default function NonVisitedPlace() {
-  const [listaLugares, setListaLugares] = useState(lugares)
+interface NonVisitedPlaceProps {
+  onNonVisitedPlaceClick: (place: LugarNonVisited) => void
+}
 
-  const marcarComoDesejado = (id: string) => {
-    setListaLugares((prevLugares) =>
-      prevLugares.map((lugar) =>
-        lugar.id === id
-          ? { ...lugar, desejaVisitar: !lugar.desejaVisitar }
-          : lugar
-      )
-    )
-  }
-
+export default function NonVisitedPlace({
+  onNonVisitedPlaceClick,
+}: NonVisitedPlaceProps) {
   return (
     <Table>
       <TableCaption>Lista de lugares não visitados.</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Nome do Lugar</TableHead>
-          <TableHead>Ação</TableHead>
+          <TableHead>Ver Localização</TableHead>
+          <TableHead>Visitei ?</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {listaLugares.map((lugar) => (
+        {lugares.map((lugar) => (
           <TableRow key={lugar.id}>
             <TableCell>{lugar.nome}</TableCell>
             <TableCell>
+              <Button>Local</Button>
+            </TableCell>
+            <TableCell>
               <Button
-                onClick={() => marcarComoDesejado(lugar.id)}
+                onClick={() => onNonVisitedPlaceClick(lugar)}
                 variant={lugar.desejaVisitar ? 'destructive' : 'default'}
               >
-                {lugar.desejaVisitar ? 'Remover da lista' : 'Quero visitar'}
+                {lugar.desejaVisitar ? 'Remover da lista' : 'Lugar Visitado ?'}
               </Button>
             </TableCell>
           </TableRow>
