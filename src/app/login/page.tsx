@@ -7,20 +7,17 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { UseAuth } from '@/hooks/useAuth'
 
 export default function LoginPage() {
+  const { signIn } = UseAuth()
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
   const [rememberMe, setRememberMe] = useState(false)
 
   const handleLogin = () => {
-    if (!email || !password) {
-      alert('Preencha todos os campos!')
-      return
-    }
-    console.log('Login:', { email, password, rememberMe })
-    router.push('protected-routes/home-page')
+    signIn({ email, password })
   }
 
   return (

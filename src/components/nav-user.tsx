@@ -17,7 +17,8 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { useRouter } from 'next/navigation'
+
+import { UseAuth } from '@/hooks/useAuth'
 
 export function NavUser({
   user,
@@ -29,6 +30,7 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const { signOut } = UseAuth()
   const getInitials = (name: string) => {
     const initials = name
       .split(' ')
@@ -37,13 +39,6 @@ export function NavUser({
     return initials.slice(0, 2) // Limitar a 2 caracteres
   }
   const userInitials = getInitials(user.name)
-
-  const router = useRouter()
-
-  const handleLogout = () => {
-    console.log('Usuário fez logout')
-    router.push('/login')
-  }
 
   return (
     <SidebarMenu>
@@ -91,7 +86,7 @@ export function NavUser({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
 
-            <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+            <DropdownMenuItem onClick={signOut} className="cursor-pointer">
               <LogOutIcon />
               Log out
             </DropdownMenuItem>

@@ -42,7 +42,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function DashboardPlace() {
+export default function DashboardPlace() {
   const totalVisitors = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.visitors, 0)
   }, [])

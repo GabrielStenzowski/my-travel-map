@@ -15,22 +15,24 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
 
-const data = {
-  user: {
-    name: 'Gabriel Stenzowski',
-    email: 'Gabriel Stenzowski',
-    avatar: '/avatars/shadcn.jpg',
-  },
-  navMain: [
-    {
-      title: 'Cadastrar Lugar',
-      url: '/protected-routes/register-place',
-      icon: IconUsers,
-    },
-  ],
-}
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const userName = localStorage.getItem('user-name')
+  const userEmail = localStorage.getItem('user-email')
+  const data = {
+    user: {
+      name: userName,
+      email: userEmail,
+      avatar: '/avatars/shadcn.jpg',
+    },
+    navMain: [
+      {
+        title: 'Cadastrar Lugar',
+        url: '/protected-routes/register-place',
+        icon: IconUsers,
+      },
+    ],
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>

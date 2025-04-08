@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation'
 import { Wrapper } from 'daju-ui-components'
 import { Card, CardContent } from '@/components/ui/card'
 import Map from '@/components/map'
+import { UseCategory } from '@/hooks/useCategory'
 
 type PlacePredictionProps = {
   place: string
@@ -40,6 +41,7 @@ type sugestionProps = {
 }
 
 export default function CadastrarLugar() {
+  const { category } = UseCategory()
   const router = useRouter()
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
   const [nome, setNome] = useState('')
@@ -196,11 +198,11 @@ export default function CadastrarLugar() {
                   <SelectValue placeholder="Selecione uma categoria" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="praia">Praia</SelectItem>
-                  <SelectItem value="montanha">Montanha</SelectItem>
-                  <SelectItem value="cidade">Cidade</SelectItem>
-                  <SelectItem value="Histórico">Histórico</SelectItem>
-                  <SelectItem value="Restaurante">Restaurante</SelectItem>
+                  {category.map((item) => (
+                    <SelectItem key={item.id} value={item.id}>
+                      {item.category_name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

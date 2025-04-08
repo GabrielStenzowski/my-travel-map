@@ -24,7 +24,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function DashboardCategoryVisitedPlaces() {
+export default function DashboardCategoryVisitedPlaces() {
   return (
     <Card>
       <CardHeader className="items-center pb-0">

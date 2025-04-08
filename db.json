@@ -1,0 +1,62 @@
+{
+  "place": [
+    {
+      "id": "0b5969e5-d297-4b1c-adb5-1ad88866f8ca",
+      "name": "Barolo",
+      "location": "Av Silva Jardin, 2487",
+      "category_id": "95d8e294-4362-4c05-9981-85563c805347",
+      "idea_user_id": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f"
+    }
+  ],
+  "user_place": [],
+  "my_visited_places": [],
+  "my_non_visited_places": [],
+  "category": [
+    {
+      "id": "95d8e294-4362-4c05-9981-85563c805347",
+      "category_name": "Restaurante Italiano"
+    },
+    {
+      "id": "1af607b6-52e8-48ae-a9bc-3c949441b5da",
+      "category_name": "Restaurante Japones"
+    },
+    {
+      "id": "f3e2a988-ae42-485c-87d7-4e8f51a05bb3",
+      "category_name": "Restaurante Chines"
+    },
+    {
+      "id": "661109ee-703f-463b-a44e-0e3ad3ba2ad7",
+      "category_name": "Restaurante Frances"
+    },
+    {
+      "id": "ab9fa7e5-ae0d-4018-9944-089572c5408d",
+      "category_name": "Restaurante Tailandes"
+    },
+    {
+      "id": "d8868971-4523-48bf-b2e8-e9a915693a58",
+      "category_name": "Restaurante Mexicano"
+    },
+    {
+      "id": "39c5eb80-318f-495d-886f-562044b707ad",
+      "category_name": "Restaurante Árabe"
+    },
+    {
+      "id": "467dce24-f76d-4452-a726-0c8b12f823a2",
+      "category_name": "Hamburgueria"
+    }
+  ],
+  "users": [
+    {
+      "id": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f",
+      "name": "Gabriel Stenzowski",
+      "email": "gabriel.stenzowskicav@gmail.com",
+      "password_hash": "$2a$12$TW/z2mGc4pLIxfIUhb8SKuTJJjwuZ7sZ1XLmlnEUvls4xgU5Jja.W"
+    },
+    {
+      "id": "a2e40a1f-f92a-42a2-b490-f19fdcc64ab5",
+      "name": "Leonardo Finger",
+      "email": "leonardo.finger@gmail.com",
+      "password_hash": "$2b$04$Bs0HY1oKaK3mDDgTBbNTx.x9lC5LtUzAszHBT3bGe8pxIDda8vk1W"
+    }
+  ]
+}

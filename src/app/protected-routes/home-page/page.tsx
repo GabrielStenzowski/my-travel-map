@@ -3,13 +3,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { DashboardPlace } from '../dashboard-places/page'
-import { DashboardCategoryVisitedPlaces } from '../dashboard-category-visited-places/page'
+
 import VisitedPlaces from '../visited-places/page'
 import { useState } from 'react'
 import ModalVisitedPlace from '../components/modalVisitedPlace'
 import NonVisitedPlace from '../non-visited-places/page'
 import ModalNonVisitedPlace from '../components/modalNonVisitedPlace'
+import DashboardCategoryVisitedPlaces from '../dashboard-category-visited-places/page'
+import DashboardPlace from '../dashboard-places/page'
 interface VisitedPlace {
   id: string
   nome: string
