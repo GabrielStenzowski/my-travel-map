@@ -100,7 +100,7 @@ export default function HomePage() {
         </Button>
         <Button
           variant="outline"
-          onClick={() => router.push('/protected-routes/listar-lugares')}
+          onClick={() => router.push('/protected-routes/list-places')}
         >
           📋 Listar Lugares
         </Button>

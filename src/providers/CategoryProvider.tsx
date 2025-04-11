@@ -15,10 +15,20 @@ export type CategoryProps = {
 
 export function CategoryProvider({ children }: CategoryProviderProps) {
   const [category, setCategory] = useState<CategoryProps[]>([])
+
   const fetchCategories = async () => {
     try {
       const response = await api.get('/category')
       setCategory(response.data)
+    } catch (error) {
+      console.error('erro ao buscar categorias', error)
+    }
+  }
+
+  const fetchCategoryById = async (id: string) => {
+    try {
+      const response = await api.get(`/category/${id}`)
+      return response.data
     } catch (error) {
       console.error('erro ao buscar categorias', error)
     }
@@ -29,6 +39,7 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
   }, [])
   const value = {
     category,
+    fetchCategoryById,
   }
   return (
     <CategoryContext.Provider value={value}>

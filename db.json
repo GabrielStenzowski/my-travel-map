@@ -1,16 +1,54 @@
 {
   "place": [
     {
-      "id": "0b5969e5-d297-4b1c-adb5-1ad88866f8ca",
-      "name": "Barolo",
-      "location": "Av Silva Jardin, 2487",
-      "category_id": "95d8e294-4362-4c05-9981-85563c805347",
-      "idea_user_id": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f"
+      "id": "4279",
+      "name": "Barolo Curitiba",
+      "googlePlaceId": "ChIJlXv0iofj3JQRc24bbmersAA",
+      "location": "Av. Silva Jardim, 2487 - Água Verde, Curitiba - PR, 80240-020, Brasil",
+      "categoryId": "95d8e294-4362-4c05-9981-85563c805347",
+      "ideaUserId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f"
+    },
+    {
+      "id": "3ba6",
+      "name": "Lellis Tratoria",
+      "googlePlaceId": "ChIJtzPt_47j3JQRAUmR8xhZOdA",
+      "location": "R. Gonçalves Dias, 51 - Batel, Curitiba - PR, 80240-340, Brasil",
+      "categoryId": "95d8e294-4362-4c05-9981-85563c805347",
+      "ideaUserId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f"
+    },
+    {
+      "id": "e856",
+      "name": "Madero Batel",
+      "googlePlaceId": "ChIJgfJzyZHj3JQRk_Euel-UHIo",
+      "location": "R. Bpo. Dom José, 2377 - Batel, Curitiba - PR, 80440-080, Brasil",
+      "categoryId": "467dce24-f76d-4452-a726-0c8b12f823a2",
+      "ideaUserId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f"
     }
   ],
-  "user_place": [],
+  "user_place": [
+    {
+      "id": "e9e3",
+      "userId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f",
+      "placeId": "4279",
+      "active": true,
+      "visited": false
+    },
+    {
+      "id": "e9e4",
+      "userId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f",
+      "placeId": "3ba6",
+      "active": true,
+      "visited": false
+    },
+    {
+      "id": "f413",
+      "userId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f",
+      "placeId": "e856",
+      "active": true,
+      "visited": false
+    }
+  ],
   "my_visited_places": [],
-  "my_non_visited_places": [],
   "category": [
     {
       "id": "95d8e294-4362-4c05-9981-85563c805347",

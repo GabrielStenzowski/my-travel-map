@@ -10,41 +10,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Button } from '@/components/ui/button'
+import { UsePlace } from '@/hooks/usePlace'
 
 interface LugarNonVisited {
   id: string
-  nome: string
-  localizacao: string
-  opiniao: string
-  desejaVisitar?: boolean
+  name: string
+  location: string
 }
-
-const lugares: LugarNonVisited[] = [
-  {
-    id: '1',
-    nome: 'Paris, França',
-    localizacao: 'França',
-    opiniao: 'Lugar incrível!',
-  },
-  {
-    id: '2',
-    nome: 'Roma, Itália',
-    localizacao: 'Itália',
-    opiniao: 'História viva!',
-  },
-  {
-    id: '3',
-    nome: 'Tóquio, Japão',
-    localizacao: 'Japão',
-    opiniao: 'Muito moderno!',
-  },
-  {
-    id: '4',
-    nome: 'Rio de Janeiro, Brasil',
-    localizacao: 'Brasil',
-    opiniao: 'Paisagens lindas!',
-  },
-]
 
 interface NonVisitedPlaceProps {
   onNonVisitedPlaceClick: (place: LugarNonVisited) => void
@@ -53,6 +25,8 @@ interface NonVisitedPlaceProps {
 export default function NonVisitedPlace({
   onNonVisitedPlaceClick,
 }: NonVisitedPlaceProps) {
+  const { myNonVisitedPlace } = UsePlace()
+  console.log(myNonVisitedPlace)
   return (
     <Table>
       <TableCaption>Lista de lugares não visitados.</TableCaption>
@@ -64,18 +38,24 @@ export default function NonVisitedPlace({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {lugares.map((lugar) => (
-          <TableRow key={lugar.id}>
-            <TableCell>{lugar.nome}</TableCell>
+        {myNonVisitedPlace.map((place) => (
+          <TableRow key={place.id}>
+            <TableCell>{place.place.name}</TableCell>
             <TableCell>
               <Button>Local</Button>
             </TableCell>
             <TableCell>
               <Button
-                onClick={() => onNonVisitedPlaceClick(lugar)}
-                variant={lugar.desejaVisitar ? 'destructive' : 'default'}
+                onClick={() =>
+                  onNonVisitedPlaceClick({
+                    id: place.id,
+                    name: place.place.name,
+                    location: place.place.location,
+                  })
+                }
+                variant={place.visited ? 'destructive' : 'default'}
               >
-                {lugar.desejaVisitar ? 'Remover da lista' : 'Lugar Visitado ?'}
+                {place.visited ? 'Remover da lista' : 'Lugar Visitado ?'}
               </Button>
             </TableCell>
           </TableRow>

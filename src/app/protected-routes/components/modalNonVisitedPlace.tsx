@@ -17,8 +17,8 @@ import { Label } from '@/components/ui/label'
 interface ModalNonVisitedPlaceProps {
   selectedNonVisitedPlace: {
     id: string
-    nome: string
-    localizacao: string
+    name: string
+    location: string
   }
   modalNonVisitedOpen: boolean
   setModalNonVisitedPlaceOpen: (open: boolean) => void
@@ -51,11 +51,11 @@ export default function ModalNonVisitedPlace({
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{selectedNonVisitedPlace.nome}</DialogTitle>
+          <DialogTitle>{selectedNonVisitedPlace.name}</DialogTitle>
         </DialogHeader>
         <DialogDescription>
           <p>
-            <strong>Localização:</strong> {selectedNonVisitedPlace.localizacao}
+            <strong>Localização:</strong> {selectedNonVisitedPlace.location}
           </p>
 
           {['ambiente', 'atendimento', 'comida', 'preco'].map((category) => (

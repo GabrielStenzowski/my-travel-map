@@ -18,6 +18,7 @@ import { Wrapper } from 'daju-ui-components'
 import { Card, CardContent } from '@/components/ui/card'
 import Map from '@/components/map'
 import { UseCategory } from '@/hooks/useCategory'
+import { UsePlace } from '@/hooks/usePlace'
 
 type PlacePredictionProps = {
   place: string
@@ -42,18 +43,19 @@ type sugestionProps = {
 
 export default function CadastrarLugar() {
   const { category } = UseCategory()
+  const { createPlace } = UsePlace()
   const router = useRouter()
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
-  const [nome, setNome] = useState('')
+  const [name, setName] = useState('')
   const [location, setLocation] = useState('')
   const [geoLocation, setGeoLocation] = useState({
     lat: -25.4284,
     lng: -49.2733,
   })
   const [sugestoes, setSugestoes] = useState<sugestionProps[]>([])
-  const [selectedPlaceId, setSelectedPlaceId] = useState<string>('')
+  const [googlePlaceId, setGooglePlaceId] = useState<string>('')
 
-  const [categoria, setCategoria] = useState('')
+  const [categoryId, setCategoryId] = useState('')
   const [loading, setLoading] = useState(false)
 
   const dimentions = {
@@ -115,18 +117,19 @@ export default function CadastrarLugar() {
     }
   }
   function handleSearchLocationByPlaceId(placeId: string) {
-    setSelectedPlaceId(placeId)
+    setGooglePlaceId(placeId)
     searchLocationById(placeId)
   }
 
   const handleCadastrar = async () => {
-    console.log({ nome, selectedPlaceId, location, geoLocation, categoria })
+    const ideaUserId = localStorage.getItem('user-id')
+    createPlace({ name, googlePlaceId, location, categoryId, ideaUserId })
     router.push('/protected-routes/home-page')
   }
 
   const handleSearchLocation = async () => {
     setLoading(true)
-    await searchSuggestionLocation(nome)
+    await searchSuggestionLocation(name)
     setLoading(false)
   }
 
@@ -142,8 +145,8 @@ export default function CadastrarLugar() {
                   id="nome"
                   type="text"
                   placeholder="Digite o nome do lugar"
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
 
                 <Button onClick={handleSearchLocation} disabled={loading}>
@@ -193,7 +196,7 @@ export default function CadastrarLugar() {
 
             <div className="mb-4">
               <Label>Categoria</Label>
-              <Select onValueChange={setCategoria} value={categoria}>
+              <Select onValueChange={setCategoryId} value={categoryId}>
                 <SelectTrigger>
                   <SelectValue placeholder="Selecione uma categoria" />
                 </SelectTrigger>

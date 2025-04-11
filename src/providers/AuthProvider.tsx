@@ -29,6 +29,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
     try {
       const response = await api.get(`/users?email=${email}`)
       const user = response.data[0]
+      console.log(user)
       if (!user) {
         console.error('Usuário não encontrado.')
         return
@@ -38,6 +39,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         console.error('Senha incorreta.')
         return
       }
+      localStorage.setItem('user-id', user.id)
       localStorage.setItem('user-name', user.name)
       localStorage.setItem('user-email', user.email)
       router.push('/protected-routes/home-page')
