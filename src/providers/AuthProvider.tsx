@@ -42,7 +42,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       localStorage.setItem('user-id', user.id)
       localStorage.setItem('user-name', user.name)
       localStorage.setItem('user-email', user.email)
-      router.push('/protected-routes/home-page')
+      router.push('/home-page')
     } catch (error) {
       console.error('Erro ao logar:', error)
     }
@@ -59,7 +59,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
         password_hash: hashPassword,
       })
       if (response.status === 201) {
-        router.push('/login')
+        router.push('/sign-in')
       }
     } catch (error) {
       console.error('Erro ao registrar usuario:', error)
@@ -76,7 +76,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   async function signOut() {
     localStorage.removeItem('user-name')
     localStorage.removeItem('user-email')
-    router.push('/login')
+    router.push('/sign-in')
   }
 
   const value = {

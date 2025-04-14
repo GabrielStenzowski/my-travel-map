@@ -9,7 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { UseAuth } from '@/hooks/useAuth'
 
-export default function LoginPage() {
+export default function SignIn() {
   const { signIn } = UseAuth()
   const router = useRouter()
   const [email, setEmail] = useState<string>('')
@@ -77,7 +77,7 @@ export default function LoginPage() {
               Ainda não tem uma conta?{' '}
               <button
                 className="text-blue-600 hover:underline dark:text-blue-400"
-                onClick={() => router.push('/register')}
+                onClick={() => router.push('/sign-up')}
               >
                 Registre-se
               </button>

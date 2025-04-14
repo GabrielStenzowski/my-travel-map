@@ -12,21 +12,25 @@ import {
 import { Button } from '@/components/ui/button'
 import { UsePlace } from '@/hooks/usePlace'
 
-interface LugarNonVisited {
+interface PlaceNonVisited {
   id: string
   name: string
   location: string
 }
 
 interface NonVisitedPlaceProps {
-  onNonVisitedPlaceClick: (place: LugarNonVisited) => void
+  onNonVisitedPlaceClick: (place: PlaceNonVisited) => void
 }
+
+// interface LocationToVisitedPlaceProps {
+//   onLocationToVisitedPlaceClick: (place: PlaceNonVisited) => void
+// }
 
 export default function NonVisitedPlace({
   onNonVisitedPlaceClick,
 }: NonVisitedPlaceProps) {
   const { myNonVisitedPlace } = UsePlace()
-  console.log(myNonVisitedPlace)
+
   return (
     <Table>
       <TableCaption>Lista de lugares não visitados.</TableCaption>

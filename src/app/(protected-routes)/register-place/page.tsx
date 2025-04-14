@@ -124,7 +124,7 @@ export default function CadastrarLugar() {
   const handleCadastrar = async () => {
     const ideaUserId = localStorage.getItem('user-id')
     createPlace({ name, googlePlaceId, location, categoryId, ideaUserId })
-    router.push('/protected-routes/home-page')
+    router.push('home-page')
   }
 
   const handleSearchLocation = async () => {

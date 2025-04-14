@@ -27,7 +27,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     navMain: [
       {
         title: 'Cadastrar Lugar',
-        url: '/protected-routes/register-place',
+        url: 'register-place',
         icon: IconUsers,
       },
     ],
@@ -42,7 +42,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="/protected-routes/home-page">
+              <a href="home-page">
                 <IconMapRoute className="!size-5" />
                 <span className="text-base font-semibold">My Travel Map.</span>
               </a>

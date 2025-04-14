@@ -63,7 +63,7 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
         ideaUserId,
       })
       if (response.status === 201) {
-        router.push('/protected-routes/home-page')
+        router.push('home-page')
       }
     } catch (error) {
       console.error('Erro ao criar lugar', error)
@@ -93,7 +93,7 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
       })
 
       if (response.status === 201) {
-        router.push('/protected-routes/home-page')
+        router.push('home-page')
       }
     } catch (error) {
       console.error('Erro ao criar lugar', error)

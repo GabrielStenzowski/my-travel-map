@@ -21,10 +21,8 @@ interface VisitedPlace {
 
 interface NonVisitedPlace {
   id: string
-  nome: string
-  localizacao: string
-  opiniao: string
-  desejaVisitar?: boolean
+  name: string
+  location: string
 }
 
 export default function HomePage() {
@@ -95,13 +93,10 @@ export default function HomePage() {
       </div>
 
       <div className="flex space-x-4 justify-center">
-        <Button onClick={() => router.push('/protected-routes/register-place')}>
+        <Button onClick={() => router.push('register-place')}>
           ➕ Cadastrar Lugar
         </Button>
-        <Button
-          variant="outline"
-          onClick={() => router.push('/protected-routes/list-places')}
-        >
+        <Button variant="outline" onClick={() => router.push('list-places')}>
           📋 Listar Lugares
         </Button>
       </div>
