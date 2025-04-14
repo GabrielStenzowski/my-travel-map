@@ -13,12 +13,11 @@ interface ModalMyLocationProps {
   setModalMyLocationOpen: (open: boolean) => void
   googlePlaceId: string
 }
-export default function MyLocationModal({
+export default function ModalMyLocationAndLocationPlace({
   googlePlaceId,
   modalMyLocationOpen,
   setModalMyLocationOpen,
 }: ModalMyLocationProps) {
-  console.log(googlePlaceId)
   const [location, setLocation] = useState<{
     lat: number
     lng: number
@@ -27,8 +26,10 @@ export default function MyLocationModal({
 
   useEffect(() => {
     if ('geolocation' in navigator) {
+      console.log(navigator)
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log(position)
           setLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
@@ -53,13 +54,20 @@ export default function MyLocationModal({
         </DialogHeader>
         <DialogDescription>
           {location ? (
-            <p>
-              Sua localização: Lat {location.lat}, Lng {location.lng}
-            </p>
+            <>
+              <p>
+                Sua localização: Lat {location.lat}, Lng {location.lng}
+              </p>
+              <p>Localização: {googlePlaceId}</p>
+            </>
           ) : error ? (
-            <p>{error}</p>
+            <>
+              <p>{error}</p>
+            </>
           ) : (
-            <p>Obtendo Localização</p>
+            <>
+              <p>Obtendo Localização</p>
+            </>
           )}
         </DialogDescription>
       </DialogContent>

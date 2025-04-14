@@ -5,7 +5,6 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
@@ -44,68 +43,73 @@ export default function ModalNonVisitedPlace({
     setRatings((prev) => ({ ...prev, [category]: value }))
   }
 
+  const handleSaveVisitedPlace = async () => {
+    console.log({ ratings, opinion, wouldReturn })
+    setOpinion('')
+    setWouldReturn(null)
+    setRatings({ ambiente: 0, atendimento: 0, comida: 0, preco: 0 })
+    setModalNonVisitedPlaceOpen(false)
+  }
+
   return (
     <Dialog
       open={modalNonVisitedOpen}
       onOpenChange={setModalNonVisitedPlaceOpen}
     >
-      <DialogContent>
+      <DialogContent aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>{selectedNonVisitedPlace.name}</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <p>
-            <strong>Localização:</strong> {selectedNonVisitedPlace.location}
-          </p>
 
-          {['ambiente', 'atendimento', 'comida', 'preco'].map((category) => (
-            <div key={category} className="flex items-center gap-2 mt-2">
-              <span className="capitalize">{category}:</span>
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Star
-                  key={star}
-                  className={`cursor-pointer ${
-                    ratings[category as keyof typeof ratings] >= star
-                      ? 'text-yellow-500'
-                      : 'text-gray-300'
-                  }`}
-                  onClick={() => handleRating(category, star)}
-                />
-              ))}
-            </div>
-          ))}
-
-          <Textarea
-            placeholder="Deixe sua opinião..."
-            value={opinion}
-            onChange={(e) => setOpinion(e.target.value)}
-            className="mt-4"
-          />
-
-          <div className="mt-4">
-            <Label>
-              <strong>Voltaria?</strong>
-            </Label>
-            <div className="flex gap-4 mt-2">
-              <label className="flex items-center gap-2">
-                <Checkbox
-                  checked={wouldReturn === 'yes'}
-                  onCheckedChange={() => setWouldReturn('yes')}
-                />
-                Sim
-              </label>
-              <label className="flex items-center gap-2">
-                <Checkbox
-                  checked={wouldReturn === 'no'}
-                  onCheckedChange={() => setWouldReturn('no')}
-                />
-                Não
-              </label>
-            </div>
+        <div className="text-sm text-muted-foreground">
+          <strong>Localização:</strong> {selectedNonVisitedPlace.location}
+        </div>
+        {['ambiente', 'atendimento', 'comida', 'preco'].map((category) => (
+          <div key={category} className="flex items-center gap-2 mt-2">
+            <span className="capitalize">{category}:</span>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                className={`cursor-pointer ${
+                  ratings[category as keyof typeof ratings] >= star
+                    ? 'text-yellow-500'
+                    : 'text-gray-300'
+                }`}
+                onClick={() => handleRating(category, star)}
+              />
+            ))}
           </div>
-        </DialogDescription>
-        <Button onClick={() => console.log({ ratings, opinion, wouldReturn })}>
-          Enviar Avaliação
+        ))}
+        <Textarea
+          placeholder="Deixe sua opinião..."
+          value={opinion}
+          onChange={(e) => setOpinion(e.target.value)}
+          className="mt-4"
+        />
+        <div className="mt-4">
+          <Label>
+            <strong>Voltaria?</strong>
+          </Label>
+          <div className="flex gap-4 mt-2">
+            <label className="flex items-center gap-2">
+              <Checkbox
+                checked={wouldReturn === 'yes'}
+                onCheckedChange={() => setWouldReturn('yes')}
+              />
+              Sim
+            </label>
+            <label className="flex items-center gap-2">
+              <Checkbox
+                checked={wouldReturn === 'no'}
+                onCheckedChange={() => setWouldReturn('no')}
+              />
+              Não
+            </label>
+          </div>
+        </div>
+
+        <Button onClick={handleSaveVisitedPlace}>
+          Enviar Avaliação (EU VISITEI!!)
         </Button>
       </DialogContent>
     </Dialog>

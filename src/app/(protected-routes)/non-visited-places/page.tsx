@@ -20,14 +20,12 @@ interface PlaceNonVisited {
 
 interface NonVisitedPlaceProps {
   onNonVisitedPlaceClick: (place: PlaceNonVisited) => void
+  onLocalClick: (location: string) => void
 }
-
-// interface LocationToVisitedPlaceProps {
-//   onLocationToVisitedPlaceClick: (place: PlaceNonVisited) => void
-// }
 
 export default function NonVisitedPlace({
   onNonVisitedPlaceClick,
+  onLocalClick
 }: NonVisitedPlaceProps) {
   const { myNonVisitedPlace } = UsePlace()
 
@@ -46,7 +44,9 @@ export default function NonVisitedPlace({
           <TableRow key={place.id}>
             <TableCell>{place.place.name}</TableCell>
             <TableCell>
-              <Button>Local</Button>
+             <Button onClick={() => onLocalClick(place.place.location)}>
+                Local
+              </Button>
             </TableCell>
             <TableCell>
               <Button

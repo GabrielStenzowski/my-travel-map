@@ -11,6 +11,7 @@ import NonVisitedPlace from '../non-visited-places/page'
 import ModalNonVisitedPlace from '../components/modalNonVisitedPlace'
 import DashboardCategoryVisitedPlaces from '../dashboard-category-visited-places/page'
 import DashboardPlace from '../dashboard-places/page'
+import ModalMyLocationAndLocationPlace from '../components/modalMyLocationToLocationPlace'
 interface VisitedPlace {
   id: string
   nome: string
@@ -36,6 +37,9 @@ export default function HomePage() {
   const [placeNonVisitedSelected, setPlaceNonVisitedSelected] =
     useState<NonVisitedPlace | null>(null)
 
+  const [modalMyLocationOpen, setModalMyLocationOpen] = useState(false)
+  const [selectedGooglePlaceId, setSelectedGooglePlaceId] = useState('')
+
   const handleOpenModal = (lugar: VisitedPlace) => {
     setLugarSelecionado(lugar)
     setModalOpen(true)
@@ -44,6 +48,11 @@ export default function HomePage() {
   const handleOpenNonVisitedPlaceModal = (place: NonVisitedPlace) => {
     setPlaceNonVisitedSelected(place)
     setModalNonVisitedPlaceOpen(true)
+  }
+
+  const handleOpenMyLocationModal = (location: string) => {
+    setSelectedGooglePlaceId(location)
+    setModalMyLocationOpen(true)
   }
 
   return (
@@ -86,6 +95,7 @@ export default function HomePage() {
             <CardContent>
               <NonVisitedPlace
                 onNonVisitedPlaceClick={handleOpenNonVisitedPlaceModal}
+                onLocalClick={handleOpenMyLocationModal}
               />
             </CardContent>
           </Card>
@@ -113,6 +123,14 @@ export default function HomePage() {
           selectedNonVisitedPlace={placeNonVisitedSelected}
           modalNonVisitedOpen={modalNonVisitedPlaceOpen}
           setModalNonVisitedPlaceOpen={setModalNonVisitedPlaceOpen}
+        />
+      )}
+
+      {modalMyLocationOpen && (
+        <ModalMyLocationAndLocationPlace
+          googlePlaceId={selectedGooglePlaceId}
+          modalMyLocationOpen={modalMyLocationOpen}
+          setModalMyLocationOpen={setModalMyLocationOpen}
         />
       )}
     </div>
