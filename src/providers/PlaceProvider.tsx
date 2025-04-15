@@ -55,12 +55,32 @@ export type IVisitedThisPlaceProps = {
   wouldReturn: string
   averageRating: number
 }
+
+type RatingProps = {
+  ambiente: number
+  atendimento: number
+  comida: number
+  preco: number
+}
+export type MyVisitedPlacesProps = {
+  averageRating: number
+  id: string
+  opinion: string
+  placeId: string
+  place: SearchPlaceProps
+  ratings: RatingProps
+  userId: string
+  wouldReturn: 'yes' | 'no'
+}
 export function PlaceProvider({ children }: PlaceProviderProps) {
   const router = useRouter()
   const userId = localStorage.getItem('user-id')
   const [searchedPlace, setSearchedPlace] = useState<SearchPlaceProps[]>([])
   const [myNonVisitedPlace, setMyNonVisitedPlace] = useState<
     MyNonVisitedPlaceProps[]
+  >([])
+  const [myVisitedPlaces, setMyVisitedPlaces] = useState<
+    MyVisitedPlacesProps[]
   >([])
   const createPlace = async ({
     name,
@@ -176,9 +196,34 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
       console.error('Erro ao visitar lugar', error)
     }
   }
+
+  const fetchMyVisitedPlaces = async () => {
+    try {
+      const responseUserPlace = await api.get(
+        `/my_visited_places?userId=` + userId
+      )
+      if (responseUserPlace.data.length > 0) {
+        const fullPlaces = await Promise.all(
+          responseUserPlace.data.map(
+            async (userPlace: AtributePlaceToMeProps) => {
+              const placeData = await fetchNameUserPlace(userPlace.placeId)
+              return {
+                ...userPlace,
+                place: placeData,
+              }
+            }
+          )
+        )
+        setMyVisitedPlaces(fullPlaces)
+      }
+    } catch (error) {
+      console.error('Error ao buscar meus lugares visitados', error)
+    }
+  }
   useEffect(() => {
     fetchSearchPlace()
     fetchNonVisitedPlace()
+    fetchMyVisitedPlaces()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -188,6 +233,7 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
     atributePlaceToMe,
     myNonVisitedPlace,
     iVisitedThisPlace,
+    myVisitedPlaces,
   }
   return <PlaceContext.Provider value={value}>{children}</PlaceContext.Provider>
 }

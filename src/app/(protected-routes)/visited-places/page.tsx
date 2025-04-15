@@ -9,52 +9,41 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table'
-import { Star } from 'lucide-react'
+import { UsePlace } from '@/hooks/usePlace'
+import { Star, StarHalf } from 'lucide-react'
 
-interface Lugar {
+interface SearchPlaceProps {
   id: string
-  nome: string
-  localizacao: string
-  opiniao: string
-  rating: number
+  name: string
+  googlePlaceId: string
+  location: string
+  categoryId: string
+  ideaUserId: string
+}
+interface RatingProps {
+  ambiente: number
+  atendimento: number
+  comida: number
+  preco: number
+}
+interface PlaceProps {
+  averageRating: number
+  id: string
+  opinion: string
+  placeId: string
+  place: SearchPlaceProps
+  ratings: RatingProps
+  userId: string
+  wouldReturn: 'yes' | 'no'
 }
 
-const lugares: Lugar[] = [
-  {
-    id: '1',
-    nome: 'Paris, França',
-    localizacao: 'França',
-    opiniao: 'Lugar incrível!',
-    rating: 5,
-  },
-  {
-    id: '2',
-    nome: 'Roma, Itália',
-    localizacao: 'Itália',
-    opiniao: 'História viva!',
-    rating: 4,
-  },
-  {
-    id: '3',
-    nome: 'Tóquio, Japão',
-    localizacao: 'Japão',
-    opiniao: 'Muito moderno!',
-    rating: 5,
-  },
-  {
-    id: '4',
-    nome: 'Rio de Janeiro, Brasil',
-    localizacao: 'Brasil',
-    opiniao: 'Paisagens lindas!',
-    rating: 4,
-  },
-]
-
 interface VisitedPlacesProps {
-  onPlaceClick: (lugar: Lugar) => void
+  onPlaceClick: (Place: PlaceProps) => void
 }
 
 export default function VisitedPlaces({ onPlaceClick }: VisitedPlacesProps) {
+  const { myVisitedPlaces } = UsePlace()
+  console.log(myVisitedPlaces)
   return (
     <>
       <Table>
@@ -66,17 +55,27 @@ export default function VisitedPlaces({ onPlaceClick }: VisitedPlacesProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {lugares.map((lugar) => (
+          {myVisitedPlaces.map((place) => (
             <TableRow
-              key={lugar.id}
-              onClick={() => onPlaceClick(lugar)}
+              key={place.id}
+              onClick={() => onPlaceClick(place)}
               className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800"
             >
-              <TableCell>{lugar.nome}</TableCell>
+              <TableCell>{place.place.name}</TableCell>
+
               <TableCell>
-                {[...Array(lugar.rating)].map((_, i) => (
-                  <Star key={i} size={16} className="text-yellow-500 inline" />
-                ))}
+                {Array.from({ length: Math.floor(place.averageRating) }).map(
+                  (_, i) => (
+                    <Star
+                      key={i}
+                      size={16}
+                      className="text-yellow-500 inline"
+                    />
+                  )
+                )}
+                {place.averageRating % 1 >= 0.5 && (
+                  <StarHalf size={16} className="text-yellow-500 inline" />
+                )}
               </TableCell>
             </TableRow>
           ))}

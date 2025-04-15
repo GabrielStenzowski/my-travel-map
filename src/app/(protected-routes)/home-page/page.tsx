@@ -12,12 +12,29 @@ import ModalNonVisitedPlace from '../components/modalNonVisitedPlace'
 import DashboardCategoryVisitedPlaces from '../dashboard-category-visited-places/page'
 import DashboardPlace from '../dashboard-places/page'
 import ModalMyLocationAndLocationPlace from '../components/modalMyLocationToLocationPlace'
-interface VisitedPlace {
+interface SearchPlaceProps {
   id: string
-  nome: string
-  localizacao: string
-  opiniao: string
-  rating: number
+  name: string
+  googlePlaceId: string
+  location: string
+  categoryId: string
+  ideaUserId: string
+}
+interface RatingProps {
+  ambiente: number
+  atendimento: number
+  comida: number
+  preco: number
+}
+interface VisitedPlace {
+  averageRating: number
+  id: string
+  opinion: string
+  placeId: string
+  place: SearchPlaceProps
+  ratings: RatingProps
+  userId: string
+  wouldReturn: 'yes' | 'no'
 }
 
 interface NonVisitedPlace {
@@ -114,7 +131,7 @@ export default function HomePage() {
       </div>
       {lugarSelecionado && (
         <ModalVisitedPlace
-          lugarSelecionado={lugarSelecionado}
+          selectedPlace={lugarSelecionado}
           modalOpen={modalOpen}
           setModalOpen={setModalOpen}
         />
