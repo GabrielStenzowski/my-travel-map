@@ -40,6 +40,21 @@ export type MyNonVisitedPlaceProps = {
   active: boolean
   place: SearchPlaceProps
 }
+
+export type IVisitedThisPlaceProps = {
+  id: string
+  userId: string
+  placeId: string
+  ratings: {
+    ambiente: number
+    atendimento: number
+    comida: number
+    preco: number
+  }
+  opinion: string
+  wouldReturn: string
+  averageRating: number
+}
 export function PlaceProvider({ children }: PlaceProviderProps) {
   const router = useRouter()
   const userId = localStorage.getItem('user-id')
@@ -112,7 +127,7 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
   const fetchNonVisitedPlace = async () => {
     try {
       const responseUserPlace = await api.get(
-        `/user_place?userId` + userId + `&visited=false&active=true`
+        `/user_place?userId=` + userId + `&visited=false&active=true`
       )
       if (responseUserPlace.data.length > 0) {
         const fullPlaces = await Promise.all(
@@ -132,6 +147,35 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
       console.error('erro ao achar lugares', error)
     }
   }
+
+  const iVisitedThisPlace = async ({
+    id,
+    userId,
+    placeId,
+    ratings,
+    opinion,
+    wouldReturn,
+    averageRating,
+  }: IVisitedThisPlaceProps) => {
+    try {
+      const response = await api.post('/my_visited_places', {
+        placeId,
+        userId,
+        ratings,
+        opinion,
+        wouldReturn,
+        averageRating,
+      })
+      const response_user_place = await api.patch(`/user_place/${id}`, {
+        visited: true,
+      })
+      if (response.status === 201 && response_user_place.status === 201) {
+        router.push('home-page')
+      }
+    } catch (error) {
+      console.error('Erro ao visitar lugar', error)
+    }
+  }
   useEffect(() => {
     fetchSearchPlace()
     fetchNonVisitedPlace()
@@ -143,6 +187,7 @@ export function PlaceProvider({ children }: PlaceProviderProps) {
     searchedPlace,
     atributePlaceToMe,
     myNonVisitedPlace,
+    iVisitedThisPlace,
   }
   return <PlaceContext.Provider value={value}>{children}</PlaceContext.Provider>
 }

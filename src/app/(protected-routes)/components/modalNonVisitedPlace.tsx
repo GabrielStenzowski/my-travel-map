@@ -12,12 +12,15 @@ import { Textarea } from '@/components/ui/textarea'
 import { Star } from 'lucide-react'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
+import { UsePlace } from '@/hooks/usePlace'
 
 interface ModalNonVisitedPlaceProps {
   selectedNonVisitedPlace: {
     id: string
+    placeId: string
     name: string
     location: string
+    userId: string
   }
   modalNonVisitedOpen: boolean
   setModalNonVisitedPlaceOpen: (open: boolean) => void
@@ -28,6 +31,7 @@ export default function ModalNonVisitedPlace({
   modalNonVisitedOpen,
   setModalNonVisitedPlaceOpen,
 }: ModalNonVisitedPlaceProps) {
+  const { iVisitedThisPlace } = UsePlace()
   const [ratings, setRatings] = useState({
     ambiente: 0,
     atendimento: 0,
@@ -35,7 +39,7 @@ export default function ModalNonVisitedPlace({
     preco: 0,
   })
   const [opinion, setOpinion] = useState('')
-  const [wouldReturn, setWouldReturn] = useState<string | null>(null)
+  const [wouldReturn, setWouldReturn] = useState<string>('')
 
   if (!selectedNonVisitedPlace) return null
 
@@ -44,9 +48,21 @@ export default function ModalNonVisitedPlace({
   }
 
   const handleSaveVisitedPlace = async () => {
-    console.log({ ratings, opinion, wouldReturn })
+    const ratingsArray = Object.values(ratings)
+    const averageRating =
+      ratingsArray.reduce((acc, curr) => acc + curr, 0) / ratingsArray.length
+
+    iVisitedThisPlace({
+      id: selectedNonVisitedPlace.id,
+      userId: selectedNonVisitedPlace.userId,
+      placeId: selectedNonVisitedPlace.placeId,
+      ratings,
+      opinion,
+      wouldReturn,
+      averageRating,
+    })
     setOpinion('')
-    setWouldReturn(null)
+    setWouldReturn('')
     setRatings({ ambiente: 0, atendimento: 0, comida: 0, preco: 0 })
     setModalNonVisitedPlaceOpen(false)
   }

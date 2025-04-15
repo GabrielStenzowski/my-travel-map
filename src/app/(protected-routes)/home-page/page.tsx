@@ -24,6 +24,8 @@ interface NonVisitedPlace {
   id: string
   name: string
   location: string
+  userId: string
+  placeId: string
 }
 
 export default function HomePage() {

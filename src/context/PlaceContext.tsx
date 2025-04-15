@@ -1,6 +1,7 @@
 import {
   AtributePlaceToMeProps,
   CreatePlaceProps,
+  IVisitedThisPlaceProps,
   MyNonVisitedPlaceProps,
   SearchPlaceProps,
 } from '@/providers/PlaceProvider'
@@ -11,6 +12,7 @@ export type PlaceContextProps = {
   searchedPlace: SearchPlaceProps[]
   atributePlaceToMe: (data: AtributePlaceToMeProps) => void
   myNonVisitedPlace: MyNonVisitedPlaceProps[]
+  iVisitedThisPlace: (data: IVisitedThisPlaceProps) => void
 }
 
 export const PlaceContext = createContext({} as PlaceContextProps)
