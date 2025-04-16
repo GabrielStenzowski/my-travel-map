@@ -38,7 +38,7 @@
       "userId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f",
       "placeId": "3ba6",
       "active": true,
-      "visited": false
+      "visited": true
     },
     {
       "id": "f413",
@@ -60,6 +60,20 @@
         "preco": 5
       },
       "opinion": "Gostei muito, muito boa a comida!!!!",
+      "wouldReturn": "yes",
+      "averageRating": 4.75
+    },
+    {
+      "id": "31c5",
+      "placeId": "3ba6",
+      "userId": "9aeeceb9-3d84-4b19-878d-ba8a109c9b5f",
+      "ratings": {
+        "ambiente": 5,
+        "atendimento": 5,
+        "comida": 4,
+        "preco": 5
+      },
+      "opinion": "Voltaria sempre",
       "wouldReturn": "yes",
       "averageRating": 4.75
     }

@@ -14,10 +14,19 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { useEffect, useState } from 'react'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const userName = localStorage.getItem('user-name')
-  const userEmail = localStorage.getItem('user-email')
+  const [userName, setUserName] = useState<string>('')
+  const [userEmail, setUserEmail] = useState<string>('')
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUserName(localStorage.getItem('user-name') || 'User Loagind')
+      setUserEmail(localStorage.getItem('user-email') || 'user.mail.loading')
+    }
+  }, [])
+
   const data = {
     user: {
       name: userName,

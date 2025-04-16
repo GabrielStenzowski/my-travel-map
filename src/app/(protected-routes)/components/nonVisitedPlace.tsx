@@ -25,7 +25,7 @@ interface NonVisitedPlaceProps {
   onLocalClick: (location: string) => void
 }
 
-export default function NonVisitedPlace({
+export function NonVisitedPlace({
   onNonVisitedPlaceClick,
   onLocalClick,
 }: NonVisitedPlaceProps) {

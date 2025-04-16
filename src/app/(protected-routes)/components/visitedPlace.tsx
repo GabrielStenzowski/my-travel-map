@@ -41,7 +41,7 @@ interface VisitedPlacesProps {
   onPlaceClick: (Place: PlaceProps) => void
 }
 
-export default function VisitedPlaces({ onPlaceClick }: VisitedPlacesProps) {
+export function VisitedPlaces({ onPlaceClick }: VisitedPlacesProps) {
   const { myVisitedPlaces } = UsePlace()
   console.log(myVisitedPlaces)
   return (

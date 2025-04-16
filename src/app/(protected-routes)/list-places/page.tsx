@@ -21,9 +21,13 @@ export default function ListAllPlaces() {
   const { fetchCategoryById } = UseCategory()
   console.log(searchedPlace)
   const [categoryNames, setCategoryNames] = useState<Record<string, string>>({})
+  const [userId, setUserId] = useState<string>('')
+
+  useEffect(() => {
+    setUserId(localStorage.getItem('user-id') || 'user.id.loading')
+  }, [])
 
   const handleAssignPlace = (placeId: string) => {
-    const userId = localStorage.getItem('user-id')
     atributePlaceToMe({
       placeId,
       userId,

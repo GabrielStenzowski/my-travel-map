@@ -4,14 +4,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 
-import VisitedPlaces from '../visited-places/page'
 import { useState } from 'react'
 import ModalVisitedPlace from '../components/modalVisitedPlace'
-import NonVisitedPlace from '../non-visited-places/page'
+
 import ModalNonVisitedPlace from '../components/modalNonVisitedPlace'
 import DashboardCategoryVisitedPlaces from '../dashboard-category-visited-places/page'
 import DashboardPlace from '../dashboard-places/page'
 import ModalMyLocationAndLocationPlace from '../components/modalMyLocationToLocationPlace'
+import { NonVisitedPlace } from '../components/nonVisitedPlace'
+import { VisitedPlaces } from '../components/visitedPlace'
 interface SearchPlaceProps {
   id: string
   name: string

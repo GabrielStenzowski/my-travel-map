@@ -74,7 +74,11 @@ export type MyVisitedPlacesProps = {
 }
 export function PlaceProvider({ children }: PlaceProviderProps) {
   const router = useRouter()
-  const userId = localStorage.getItem('user-id')
+  const [userId, setUserId] = useState<string>('')
+
+  useEffect(() => {
+    setUserId(localStorage.getItem('user-id') || 'user.id.loading')
+  }, [])
   const [searchedPlace, setSearchedPlace] = useState<SearchPlaceProps[]>([])
   const [myNonVisitedPlace, setMyNonVisitedPlace] = useState<
     MyNonVisitedPlaceProps[]

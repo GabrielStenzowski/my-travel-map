@@ -1,7 +1,7 @@
 'use client'
 
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -58,6 +58,11 @@ export default function CadastrarLugar() {
   const [categoryId, setCategoryId] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const [ideaUserId, setUserId] = useState<string>('')
+
+  useEffect(() => {
+    setUserId(localStorage.getItem('user-id') || 'user.id.loading')
+  }, [])
   const dimentions = {
     width: '100%',
     height: '300px',
@@ -122,7 +127,6 @@ export default function CadastrarLugar() {
   }
 
   const handleCadastrar = async () => {
-    const ideaUserId = localStorage.getItem('user-id')
     createPlace({ name, googlePlaceId, location, categoryId, ideaUserId })
     router.push('home-page')
   }
