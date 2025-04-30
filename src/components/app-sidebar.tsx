@@ -1,7 +1,11 @@
 'use client'
 
 import * as React from 'react'
-import { IconMapRoute, IconUsers } from '@tabler/icons-react'
+import {
+  IconMapRoute,
+  IconMapPinPlus, // para cadastrar lugar
+  IconListSearch,
+} from '@tabler/icons-react'
 
 import { NavMain } from '@/components/nav-main'
 import { NavUser } from '@/components/nav-user'
@@ -37,7 +41,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         title: 'Cadastrar Lugar',
         url: 'register-place',
-        icon: IconUsers,
+        icon: IconMapPinPlus,
+      },
+      {
+        title: 'Listar Lugares',
+        url: 'list-places',
+        icon: IconListSearch,
       },
     ],
   }

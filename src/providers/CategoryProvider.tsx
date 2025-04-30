@@ -18,7 +18,7 @@ export function CategoryProvider({ children }: CategoryProviderProps) {
 
   const fetchCategories = async () => {
     try {
-      const response = await api.get('/category')
+      const response = await api.get('/categories')
       setCategory(response.data)
     } catch (error) {
       console.error('erro ao buscar categorias', error)

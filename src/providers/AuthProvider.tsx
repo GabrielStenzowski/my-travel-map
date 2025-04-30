@@ -2,10 +2,14 @@
 
 import { AuthContext } from '@/context/AuthContext'
 import { useRouter } from 'next/navigation'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect } from 'react'
 import bcrypt from 'bcryptjs'
 import { v4 as uuidv4 } from 'uuid'
 import { api } from '@/api'
+import {
+  cookieTokenAuthDelete,
+  cookieTokenAuthSave,
+} from '@/app/cookies/cookiesAuthToken'
 
 type AuthProviderProps = {
   children: ReactNode
@@ -27,22 +31,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   const signIn = async ({ email, password }: SignInProps) => {
     try {
-      const response = await api.get(`/users?email=${email}`)
-      const user = response.data[0]
-      console.log(user)
-      if (!user) {
-        console.error('Usuário não encontrado.')
-        return
+      const { data } = await api.post(`/authenticate`, { email, password })
+
+      console.log(data)
+      if (data.tokenAuth) {
+        cookieTokenAuthSave(data.tokenAuth)
+        localStorage.setItem('authToken', data.tokenAuth)
+        setTimeout(() => {
+          router.push('/home-page')
+        }, 300)
       }
-      const passwordMatch = await bcrypt.compare(password, user.password_hash)
-      if (!passwordMatch) {
-        console.error('Senha incorreta.')
-        return
-      }
-      localStorage.setItem('user-id', user.id)
-      localStorage.setItem('user-name', user.name)
-      localStorage.setItem('user-email', user.email)
-      router.push('/home-page')
     } catch (error) {
       console.error('Erro ao logar:', error)
     }
@@ -74,10 +72,19 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   async function signOut() {
-    localStorage.removeItem('user-name')
-    localStorage.removeItem('user-email')
+    cookieTokenAuthDelete()
+    localStorage.removeItem('authToken')
+
     router.push('/sign-in')
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken')
+
+    if (!token) {
+      router.push('/sign-in')
+    }
+  }, [router])
 
   const value = {
     signIn,
